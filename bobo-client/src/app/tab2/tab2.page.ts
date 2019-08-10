@@ -9,7 +9,7 @@ import {mergeMap, tap} from 'rxjs/operators';
     templateUrl: 'tab2.page.html',
     styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page implements OnInit {
+export class Tab2Page {
     amount = 0;
 
     constructor(private alertCtrl: AlertController,
@@ -19,7 +19,7 @@ export class Tab2Page implements OnInit {
                 private loadingController: LoadingController) {
     }
 
-    ngOnInit(): void {
+    ionViewDidEnter(): void {
         this.getBalance().subscribe(this.setAmount.bind(this));
     }
 
@@ -56,13 +56,10 @@ export class Tab2Page implements OnInit {
 
         await loading.present();
 
-        this.userService.faucet().pipe(
-            mergeMap(() => this.getBalance()),
-            tap(() => {
+        this.userService.faucet()
+            .subscribe(() => {
                 loading.dismiss();
-            }),
-        )
-            .subscribe(this.setAmount.bind(this), async () => {
+            }, async () => {
                 loading.dismiss();
 
                 const alert = await this.alertCtrl.create({

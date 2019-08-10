@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {NavController} from '@ionic/angular';
+import {NavController, LoadingController, AlertController} from '@ionic/angular';
+
 import {Product} from './Product';
 import {UserService} from '../../../shared/services/user.service';
 
@@ -13,7 +14,9 @@ export class ProductListPage implements OnInit {
     public products: Product[] = [];
 
     constructor(public navCtrl: NavController,
-                private userService: UserService) {
+                private userService: UserService,
+                private loadingController: LoadingController,
+                private alertController: AlertController) {
         let products = [
             new Product(
                 'Water 10L',
@@ -47,21 +50,46 @@ export class ProductListPage implements OnInit {
         ));
     }
 
+    ngOnInit() {
+    }
+
     get finalValue(): number {
         return this.products.reduce((sum, prod) => sum + (prod._quantity * prod.price), 0);
     }
 
-    purchase() {
+    async purchase() {
+        const loading = await this.loadingController.create({
+            message: 'Please wait...',
+            translucent: true,
+        });
+
+        await loading.present();
+
         const memo = this.products
             .filter((i: any) => i._quantity)
             .reduce((acc, com) => acc + `${com.name} ${com._quantity} ${com._quantity * com.price}\n`, '');
 
         this.userService.pay(this.finalValue, memo)
-            .subscribe((data: any) => {
-                console.log(data);
-            });
-    }
+            .subscribe(async () => {
+                loading.dismiss();
 
-    ngOnInit() {
+                const alert = await this.alertController.create({
+                    header: 'Notice',
+                    message: 'Successfully purchased!',
+                    buttons: ['OK']
+                });
+
+                await alert.present();
+            }, async (err) => {
+                loading.dismiss();
+
+                const alert = await this.alertController.create({
+                    header: 'Notice',
+                    message: 'Insufficient balance.',
+                    buttons: ['OK']
+                });
+
+                await alert.present();
+            });
     }
 }

@@ -9,7 +9,7 @@ import {AlertController} from '@ionic/angular';
     templateUrl: 'tab1.page.html',
     styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page implements OnInit {
+export class Tab1Page {
     helpees = [];
 
     constructor(private hellpeeService: HellpeeService,
@@ -17,7 +17,7 @@ export class Tab1Page implements OnInit {
                 private alertController: AlertController) {
     }
 
-    ngOnInit() {
+    ionViewDidEnter() {
         this.hellpeeService.getHellpees()
             .subscribe((data: any) => {
                 this.helpees = data.helpees;
@@ -35,7 +35,7 @@ export class Tab1Page implements OnInit {
                         this.router.navigate(['signin']);
                         return;
                     default:
-                        // Do nothing
+                    // Do nothing
                 }
             });
     }
