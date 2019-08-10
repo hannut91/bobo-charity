@@ -1,0 +1,51 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Donation
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-item>
+        <ion-label position="floating">Input Amount</ion-label>
+
+        <ion-input [(ngModel)]="amount" placeholder="BOBO" type="number"></ion-input>
+    </ion-item>
+
+    <div class="buttons">
+        <ion-button class="donatebutton" size="small"
+                    (click)="plusMoney(5)">
+            5 BOBO
+        </ion-button>
+        <ion-button class="donatebutton" size="small"
+                    (click)="plusMoney(10)">
+            10 BOBO
+        </ion-button>
+        <ion-button class="donatebutton" size="small"
+                    (click)="plusMoney(30)">
+            30 BOBO
+        </ion-button>
+        <ion-button class="donatebutton" size="small"
+                    (click)="plusMoney(50)">
+            50 BOBO
+        </ion-button>
+    </div>
+
+    <ion-item>
+        <ion-label position="floating">Leave a message</ion-label>
+
+        <ion-textarea class=""
+                      [(ngModel)]="memo"
+                      placeholder="I love you"
+                      type="text"></ion-textarea>
+    </ion-item>
+
+    <div class="donate-button">
+        <ion-button expand="block"
+                    (click)="donates()">
+            Donate!
+        </ion-button>
+    </div>
+</ion-content>
+

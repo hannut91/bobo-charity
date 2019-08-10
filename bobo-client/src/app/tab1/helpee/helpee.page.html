@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            {{ helpee.name }}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <img class="photo"
+         src="/assets/shapes.svg" alt=""/>
+
+    <div class="title">
+        {{ helpee.name }}
+    </div>
+
+    <div class="description">
+        {{ helpee.description }}
+    </div>
+
+    <ion-button class="donate-btn"
+                expand="block" routerLink="/tabs/tab1/donate" [queryParams]="{_id: helpee._id}">
+        Donate!
+    </ion-button>
+
+    <div class="use-list">
+        RECEIVED DONATIONS
+    </div>
+
+    <div>
+        <ion-card class="welcome-card"
+                  *ngFor="let i of transactions.slice().reverse()"
+                  (click)="showData(i.hash)">
+            <ion-card-header>
+                <ion-card-title class="title">{{i.hash}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <img class="image" src="/assets/shapes.svg" alt=""/>
+                <p class="memo">{{i.memo}}</p>
+                <br/>
+                <p class="amount"><strong>RECEIVED {{i.amount}} BOBO</strong></p>
+            </ion-card-content>
+        </ion-card>
+    </div>
+</ion-content>
+

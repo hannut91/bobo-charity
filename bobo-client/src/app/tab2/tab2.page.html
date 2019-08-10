@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Wallet
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-card>
+        <ion-card-header>
+            <ion-card-subtitle>My Balance</ion-card-subtitle>
+            <ion-card-title class="balance-title">
+                {{amount}} BOBO<br>
+
+                <ion-button class="faucet"
+                            (click)="faucet()">
+                    Faucet
+                </ion-button>
+            </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content class="article">
+            The more you donate, the more you save lives.
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-item routerLink="/sponsor-list">
+            <img class="sponsor" src="assets/hand-shake.png" slot="start">
+            <ion-label>Your Donations</ion-label>
+        </ion-item>
+
+        <ion-item (click)="logout()">
+            <ion-icon name="ios-log-out" slot="start"></ion-icon>
+            <ion-label>Log out</ion-label>
+        </ion-item>
+    </ion-card>
+</ion-content>
